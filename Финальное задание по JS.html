@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title></title>
+    <script>
+      var names = [];
+      var positions = [
+        "Junior developer",
+        "Middle developer",
+        "Senior developer",
+        "Junior QA",
+        "Middle QA",
+        "Senior QA",
+        "Project manager",
+      ];
+
+      function getNames() {
+        for (var i = 0; i < positions.length; i++) {
+          var name = prompt("Введите имя для должности: " + positions[i]);
+          names.push(name);
+        }
+      }
+
+      function createTeam() {
+        team = {};
+        for (var i = 0; i < positions.length; i++) {
+          team[names[i]] = {
+            name: names[i],
+            position: positions[i],
+          };
+        }
+      }
+
+      function setSalary() {
+        for (var key in team) {
+          var position = team[key].position.toLowerCase();
+          if (position.indexOf("junior") !== -1) {
+            team[key].salary = Math.floor(
+              Math.random() * (1000 - 500 + 1) + 500
+            );
+          } else if (position.indexOf("middle") !== -1) {
+            team[key].salary = Math.floor(
+              Math.random() * (2000 - 1500 + 1) + 1500
+            );
+          } else if (position.indexOf("senior") !== -1) {
+            team[key].salary = Math.floor(
+              Math.random() * (3000 - 2500 + 1) + 2500
+            );
+          } else {
+            team[key].salary = Math.floor(
+              Math.random() * (4500 - 4000 + 1) + 4000
+            );
+          }
+        }
+      }
+
+      function addTellAboutYourself() {
+        for (var key in team) {
+          team[key].tellAboutYourself = function () {
+            document.write(
+              "Меня зовут " +
+                this.name +
+                " и я - " +
+                this.position +
+                ". Я зарабатываю " +
+                this.salary +
+                "$.<br/>"
+            );
+          };
+
+          team[key].tellAboutYourself();
+        }
+        document.write("<br/><br/>");
+      }
+
+      function addShowTeam() {
+        team.showTeam = function () {
+          for (var key in this) {
+            if (this.hasOwnProperty(key) && typeof this[key] !== "function") {
+              document.write(
+                this[key].name +
+                  " - " +
+                  this[key].position +
+                  ". Зарплата - " +
+                  this[key].salary +
+                  "$. <br/>"
+              );
+            }
+          }
+        };
+      }
+
+      getNames();
+      createTeam();
+      setSalary();
+      addTellAboutYourself();
+      addShowTeam();
+      team.showTeam();
+    </script>
+  </head>
+  <body></body>
+</html>
